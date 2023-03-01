@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const Card = (article) => {
   // TASK 5
   // ---------------------
@@ -17,6 +19,31 @@ const Card = (article) => {
   //   </div>
   // </div>
   //
+
+  const newArticle = document.createElement("div");
+  newArticle.classList.add("card");
+  const newHeadline = document.createElement("div");
+  newHeadline.classList.add("headline");
+  newArticle.appendChild(newHeadline);
+  const newAuthor = document.createElement("div");
+  newAuthor.classList.add("author");
+  newArticle.appendChild(newAuthor);
+  const newImgCont = document.createElement("div");
+  newImgCont.classList.add("img-container");
+  const newImg = document.createElement("img");
+  newImgCont.appendChild(newImg);
+  const newAuthName = document.createElement("span");
+  newAuthor.appendChild(newImgCont);
+  newAuthor.appendChild(newAuthName);
+
+  newHeadline.textContent = article.headline;
+  newAuthName.textContent = `By ${article.authorName}`;
+  newImg.src = article.authorPhoto;
+
+  newArticle.addEventListener("click", event => {
+    console.log(article.headline);
+  });
+  return newArticle;
 }
 
 const cardAppender = (selector) => {
@@ -28,6 +55,32 @@ const cardAppender = (selector) => {
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
+
+  axios.get('http://localhost:5001/api/articles').then(response => {
+    // console.log(`Card Appender: ${JSON.stringify(response.data)}`);
+    const hardArt = response.data.articles;
+    // console.log(`HARD ART ${JSON.stringify(hardArt)}`);
+    for (const language in hardArt) {
+      console.log(`heres a thing ${hardArt[language].length}`);
+      for (let x = 0; x < hardArt[language].length; x++) {
+        console.log(`asdasd ${hardArt[language][x]}`);
+        let card = Card(hardArt[language][x]);
+        let selectedElement = document.querySelector(selector);
+        selectedElement.appendChild(card);
+        
+      }
+    }
+    // const tabs = Card(hardArt);
+    // const selectedElement = document.querySelector(selector);
+    // selectedElement.appendChild(tabs);
+  });
+
+  // const hardTop  = response.data.topics;
+  // const tabs = Tabs(hardTop);
+  // const selectedElement = document.querySelector(selector);
+  // selectedElement.appendChild(tabs);
+  return selectedElement;
+
 }
 
 export { Card, cardAppender }

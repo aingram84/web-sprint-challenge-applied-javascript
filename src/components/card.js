@@ -19,7 +19,7 @@ const Card = (article) => {
   //   </div>
   // </div>
   //
-
+  console.log(`ASDASD ${JSON.stringify(article)}`);
   const newArticle = document.createElement("div");
   newArticle.classList.add("card");
   const newHeadline = document.createElement("div");
@@ -64,22 +64,14 @@ const cardAppender = (selector) => {
       console.log(`heres a thing ${hardArt[language].length}`);
       for (let x = 0; x < hardArt[language].length; x++) {
         console.log(`asdasd ${hardArt[language][x]}`);
-        let card = Card(hardArt[language][x]);
+        let newCard = Card(hardArt[language][x]);
         let selectedElement = document.querySelector(selector);
-        selectedElement.appendChild(card);
-        
+        selectedElement.appendChild(newCard);
+
       }
     }
-    // const tabs = Card(hardArt);
-    // const selectedElement = document.querySelector(selector);
-    // selectedElement.appendChild(tabs);
   });
-
-  // const hardTop  = response.data.topics;
-  // const tabs = Tabs(hardTop);
-  // const selectedElement = document.querySelector(selector);
-  // selectedElement.appendChild(tabs);
-  return selectedElement;
+  return selector;
 
 }
 
